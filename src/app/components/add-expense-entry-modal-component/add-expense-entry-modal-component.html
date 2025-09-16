@@ -1,0 +1,53 @@
+<div class="modal fade show d-block align-items-start" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered pt-5">
+    <div class="modal-content shadow-none border">
+      <div class="modal-header">
+        <h5 class="modal-title">{{ isEditMode ? 'Edit Expense Entry' : 'Add New Expense Entry' }}</h5>
+        <button type="button" class="btn-close" (click)="close()" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="entryForm" (ngSubmit)="saveEntry()">
+          <div class="mb-3">
+            <label for="date" class="form-label">Date:</label>
+            <input type="date" id="date" class="form-control" formControlName="date">
+            @if(entryForm.get('date')?.invalid && entryForm.get('date')?.touched){
+              <div class="text-danger small mt-1">A valid date is required.</div>
+            }
+          </div>
+          <div class="mb-3">
+            <label for="expenseType" class="form-label">Expense Type:</label>
+            <select id="expenseType" class="form-select" formControlName="expenseTypeId">
+              <option [ngValue]="null" disabled>-- Select a Type --</option>
+              @for(type of expenseTypes; track type.id){ <option [ngValue]="type.id">{{ type.name }}</option> }
+            </select>
+            @if(entryForm.get('expenseTypeId')?.invalid && entryForm.get('expenseTypeId')?.touched){
+              <div class="text-danger small mt-1">Please select an expense type.</div>
+            }
+          </div>
+          <div class="mb-3">
+            <label for="total" class="form-label">Total:</label>
+            <input type="number" id="total" class="form-control" formControlName="total" placeholder="0.00" step="0.01">
+            @if(entryForm.get('total')?.invalid && entryForm.get('total')?.touched){
+              <div class="text-danger small mt-1">A valid total is required.</div>
+            }
+          </div>
+          <div class="mb-3">
+            <label for="description" class="form-label">Description (Optional):</label>
+            <textarea id="description" class="form-control" formControlName="description" rows="2"></textarea>
+          </div>
+
+          @if(errorMessage){
+            <div class="alert alert-danger mt-3">{{ errorMessage }}</div>
+          }
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="close()">Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="saveEntry()" [disabled]="isSubmitting">
+          {{ isSubmitting ? 'Saving...' : (isEditMode ? 'Save Changes' : 'Save Entry') }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-backdrop fade show"></div>

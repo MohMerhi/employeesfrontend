@@ -1,0 +1,33 @@
+<div class="modal fade show d-block align-items-start" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered pt-5">
+    <div class="modal-content shadow-none border">
+      <div class="modal-header">
+        <h5 class="modal-title">Review Expense Claim #{{ expenseClaim?.id }}</h5>
+        <button type="button" class="btn-close" (click)="close()" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item"><strong>Employee:</strong> {{ expenseClaim?.employeeName }}</li>
+          <li class="list-group-item"><strong>Date:</strong> {{ expenseClaim?.date }}</li>
+          <li class="list-group-item"><strong>Total:</strong> ${{ expenseClaim?.total | number: '1.2-2' }}</li>
+          <li class="list-group-item"><strong>Description:</strong> {{ expenseClaim?.description || 'N/A' }}</li>
+        </ul>
+
+        @if(errorMessage){
+          <div class="alert alert-danger mt-3">{{ errorMessage }}</div>
+        }
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="close()" [disabled]="isSubmitting">Cancel</button>
+        <button type="button" class="btn btn-danger" (click)="updateStatus('Rejected')" [disabled]="isSubmitting">
+          {{ isSubmitting ? 'Submitting...' : 'Reject' }}
+        </button>
+        <button type="button" class="btn btn-success" (click)="updateStatus('Approved')" [disabled]="isSubmitting">
+          {{ isSubmitting ? 'Submitting...' : 'Approve' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-backdrop fade show"></div>

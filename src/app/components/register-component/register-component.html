@@ -1,0 +1,50 @@
+<div class="auth-container">
+  <div class="card shadow-sm">
+    <div class="card-body p-5">
+      <h3 class="card-title text-center mb-4">Create an Account</h3>
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="firstname" class="form-label">First Name</label>
+            <input type="text" class="form-control" id="firstname" formControlName="firstname">
+            @if(registerForm.get('firstname')?.invalid && registerForm.get('firstname')?.touched){
+              <div class="text-danger small mt-1">First name is required.</div>
+            }
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="lastname" class="form-label">Last Name</label>
+            <input type="text" class="form-control" id="lastname" formControlName="lastname">
+            @if(registerForm.get('lastname')?.invalid && registerForm.get('lastname')?.touched){
+              <div class="text-danger small mt-1">Last name is required.</div>
+            }
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">Email address</label>
+          <input type="email" class="form-control" id="email" formControlName="email" placeholder="name@example.com">
+          @if(registerForm.get('email')?.invalid && registerForm.get('email')?.touched){
+            <div class="text-danger small mt-1">Please enter a valid email.</div>
+          }
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input type="password" class="form-control" id="password" formControlName="password">
+          @if(registerForm.get('password')?.invalid && registerForm.get('password')?.touched){
+            <div class="text-danger small mt-1">Password must be at least 6 characters.</div>
+          }
+        </div>
+        <div class="d-grid">
+          <button type="submit" class="btn btn-primary" [disabled]="isSubmitting">
+            {{ isSubmitting ? 'Creating Account...' : 'Register' }}
+          </button>
+        </div>
+        @if(errorMessage){
+          <div class="alert alert-danger mt-3">{{ errorMessage }}</div>
+        }
+      </form>
+      <div class="text-center mt-3">
+        <small>Already have an account? <a routerLink="/login">Login here</a></small>
+      </div>
+    </div>
+  </div>
+</div>

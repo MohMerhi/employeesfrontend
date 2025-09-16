@@ -1,0 +1,64 @@
+<div class="container-fluid p-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="h3">Employees</h2>
+    <div class="d-flex align-items-center gap-2">
+      <input
+        type="text"
+        id="search"
+        class="form-control"
+        style="width: 250px;"
+        name="search"
+        [(ngModel)]="searchTerm"
+        (input)="filterEmployees()"
+        placeholder="Search by name..."
+      >
+      <button class="btn btn-primary" (click)="openEmployeeModal()">+ Add Employee</button>
+    </div>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-striped table-hover align-middle">
+      <thead class="table-light">
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Address</th>
+        <th>Department</th>
+        <th class="text-end">Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+        @for(emp of filteredEmployees; track emp.id){
+          <tr>
+            <td>{{ emp.id }}</td>
+            <td>{{ emp.name }}</td>
+            <td>{{ emp.email }}</td>
+            <td>{{ emp.address }}</td>
+            <td>{{ emp.departmentName }}</td>
+            <td class="text-end">
+              <button class="btn btn-sm btn-outline-primary me-2" (click)="openEmployeeModal(emp)">Edit</button>
+              <button class="btn btn-sm btn-outline-danger" (click)="openDeleteModal(emp)">Delete</button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
+  @if(isEmployeeModalOpen){
+    <app-employee-modal
+      [employee]="employeeToEdit"
+      (closeModal)="closeEmployeeModal()"
+      (employeeSaved)="onEmployeeSaved()">
+    </app-employee-modal>
+  }
+
+  @if(isDeleteModalOpen){
+    <app-delete-employee-modal
+      [employee]="employeeToDelete"
+      (closeModal)="closeDeleteModal()"
+      (employeeDeleted)="onEmployeeDeleted()">
+    </app-delete-employee-modal>
+  }
+</div>

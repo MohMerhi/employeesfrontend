@@ -1,0 +1,24 @@
+<div class="modal fade show d-block align-items-start" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered pt-5">
+    <div class="modal-content shadow-none border">
+      <div class="modal-header">
+        <h5 class="modal-title">Delete Expense Claim</h5>
+        <button type="button" class="btn-close" (click)="cancel()" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        @if(!errorMessage){
+          <p class="text-center">Are you sure you want to delete the expense claim for <strong>{{ expenseClaim?.employeeName }}</strong> dated <strong>{{ expenseClaim?.date }}</strong>?</p>
+        } @else {
+          <div class="alert alert-danger">{{ errorMessage }}</div>
+        }
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="cancel()">No, Cancel</button>
+        <button type="button" class="btn btn-danger" (click)="confirmDelete()" [disabled]="isDeleting">
+          {{ isDeleting ? 'Deleting...' : 'Yes, Delete' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-backdrop fade show"></div>

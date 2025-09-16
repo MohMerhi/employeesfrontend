@@ -1,0 +1,60 @@
+<div class="modal fade show d-block align-items-start" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered pt-5">
+    <div class="modal-content shadow-none border">
+      <div class="modal-header">
+        <h5 class="modal-title">{{ isEditMode ? 'Edit Leave' : 'Add New Leave' }}</h5>
+        <button type="button" class="btn-close" (click)="close()" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="leaveForm" (ngSubmit)="saveLeave()">
+          <div class="mb-3">
+            <label for="employee" class="form-label">Employee:</label>
+            <select id="employee" class="form-select" formControlName="employeeId">
+              <option [ngValue]="null" disabled>-- Select an Employee --</option>
+              @for(emp of employees; track emp.id){ <option [ngValue]="emp.id">{{ emp.name }}</option> }
+            </select>
+            @if(leaveForm.get('employeeId')?.invalid && leaveForm.get('employeeId')?.touched){
+              <div class="text-danger small mt-1">Please select an employee.</div>
+            }
+          </div>
+          <div class="mb-3">
+            <label for="leaveType" class="form-label">Leave Type:</label>
+            <select id="leaveType" class="form-select" formControlName="leaveTypeId">
+              <option [ngValue]="null" disabled>-- Select a Leave Type --</option>
+              @for(type of leaveTypes; track type.id){ <option [ngValue]="type.id">{{ type.name }}</option> }
+            </select>
+            @if(leaveForm.get('leaveTypeId')?.invalid && leaveForm.get('leaveTypeId')?.touched){
+              <div class="text-danger small mt-1">Please select a leave type.</div>
+            }
+          </div>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="startDate" class="form-label">From Date:</label>
+              <input type="date" id="startDate" class="form-control" formControlName="startDate">
+              @if(leaveForm.get('startDate')?.invalid && leaveForm.get('startDate')?.touched){
+                <div class="text-danger small mt-1">A valid start date is required.</div>
+              }
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="numberOfDays" class="form-label">Leave Days:</label>
+              <input type="number" id="numberOfDays" class="form-control" formControlName="numberOfDays" min="1">
+              @if(leaveForm.get('numberOfDays')?.invalid && leaveForm.get('numberOfDays')?.touched){
+                <div class="text-danger small mt-1">Days must be 1 or more.</div>
+              }
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="note" class="form-label">Notes:</label>
+            <textarea id="note" class="form-control" formControlName="note" rows="3"></textarea>
+          </div>
+          @if(errorMessage){ <div class="alert alert-danger">{{ errorMessage }}</div> }
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="close()">Cancel</button>
+        <button type="button" class="btn btn-danger" (click)="saveLeave()">{{ isEditMode ? 'Save Changes' : 'Save Leave' }}</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-backdrop fade show"></div>

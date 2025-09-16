@@ -1,0 +1,18 @@
+<div class="d-flex" id="wrapper">
+  <app-sidebar (viewChangeEvent)="onViewChange($event)"></app-sidebar>
+
+  <div id="page-content-wrapper">
+    <app-header (toggleSidebarEvent)="toggleSidebar()"></app-header>
+    <div class="container-fluid">
+      @if (currentView === 'employees') {
+        <app-employees-component></app-employees-component>
+      }
+      @if (currentView === 'leaves') {
+        <app-leaves-component></app-leaves-component>
+      }
+      @if (currentView === 'expenses') {
+        <app-expenses-component></app-expenses-component>
+      }
+    </div>
+  </div>
+</div>

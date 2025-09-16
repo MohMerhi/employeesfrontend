@@ -1,0 +1,12 @@
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f8f9fa;
+}
+.card {
+  width: 100%;
+  max-width: 420px;
+  border: none;
+}
