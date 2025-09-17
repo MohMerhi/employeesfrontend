@@ -41,7 +41,7 @@ export class RegisterComponent {
       next: () => {
         this.router.navigate(['/']);
       },
-      error: (err) => {
+      error: (err: any) => {
         console.error('Registration failed:', err);
         this.errorMessage = 'This email may already be in use. Please try again.';
         this.isSubmitting = false;
